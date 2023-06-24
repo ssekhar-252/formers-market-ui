@@ -1,0 +1,71 @@
+<h2>Formers Market</h2>
+
+<div>
+  <div>
+    <h3>Available products</h3>
+    <table>
+      <tr>
+        <td class="table-header">Product Code</td>
+        <td class="table-header">Price</td>
+        <td class="table-header">Action</td>
+      </tr>
+      <tr *ngFor="let product of productDetails">
+        <td>{{ product[0] }}</td>
+        <td>{{ product[1].price | currency : "USD" }}</td>
+        <td>
+          <input type="button" value="Scan" (click)="scanItem(product[0])" />
+        </td>
+      </tr>
+    </table>
+  </div>
+  <br />
+  <div>
+    <input type="button" value="Clear Basket" (click)="clear()" /> &nbsp;
+    <input
+      *ngIf="basketDetails?.length"
+      type="button"
+      value="Print"
+      (click)="print()"
+    />
+  </div>
+  <br />
+  <div *ngIf="basketDetails?.length">
+    <div>
+      <h3>Basket details</h3>
+      <table>
+        <tr>
+          <td class="table-header">Product Code</td>
+          <td class="table-header">Quantity</td>
+        </tr>
+        <tr *ngFor="let item of basketDetails">
+          <td>{{ item[0] }}</td>
+          <td>{{ item[1] }}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <br />
+  <div *ngIf="printDetails.length">
+    <h3>Print particulars</h3>
+    <table>
+      <tr>
+        <td class="table-header">Item</td>
+        <td class="table-header"></td>
+        <td class="table-header">Price</td>
+      </tr>
+      <tr *ngFor="let detail of printDetails">
+        <ng-container *ngIf="detail.productCode || detail.special">
+          <td>{{ detail.productCode }}</td>
+          <td>{{ detail.special }}</td>
+          <td>{{ detail.price | currency : "USD" }}</td>
+        </ng-container>
+      </tr>
+      <br />
+      <tr>
+        <td class="table-header">Total</td>
+        <td class="table-header"></td>
+        <td class="table-header">{{ totalAmount | currency : "USD" }}</td>
+      </tr>
+    </table>
+  </div>
+</div>
